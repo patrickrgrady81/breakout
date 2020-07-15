@@ -14,6 +14,17 @@ export default class Game {
     this.ctx.fillRect(0 ,0, this.globals.width, this.globals.height);
   }
 
+  ballPaddleCollide = () => { 
+    if (this.ball.pos.x >= this.paddle.pos.x) { 
+      if (this.ball.pos.x >= this.paddle.pos.x && this.ball.pos.x + this.ball.size < this.paddle.pos.x + this.paddle.width) { 
+        if (this.ball.pos.y + this.ball.size -4 >= this.paddle.pos.y && this.ball.pos.y < this.paddle.pos.y + this.paddle.height)
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   play = (time) => { 
     var currentProgress = time - this.prevTime;
     this.clear(this.globals.bgColor);
@@ -21,6 +32,7 @@ export default class Game {
     this.paddle.draw(this.ctx);
     this.ball.update();
     this.ball.draw(this.ctx);
+    this.ball.collideWithPaddle(this.ballPaddleCollide());
     this.prevTime = time;
     window.requestAnimationFrame(this.play);
   }

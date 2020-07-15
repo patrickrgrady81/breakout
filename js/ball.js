@@ -24,4 +24,11 @@ export default class Ball {
     this.pos.y += this.yspeed;
     this.bound();
   }
+
+  collideWithPaddle = (collision) => { 
+    if (!collision) return;
+    // this.xspeed = -this.xspeed;
+    this.yspeed = -this.yspeed;
+    this.update();
+  }
 }
