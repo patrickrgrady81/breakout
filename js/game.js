@@ -7,6 +7,7 @@ export default class Game {
     this.paddle = paddle;
     this.bricks = levels.level[levels.currentLevel-1].bricks;
     this.menu = menu;
+    this.brickCount = this.bricks.length;
 
     window.requestAnimationFrame(this.play);
   }
@@ -40,17 +41,6 @@ export default class Game {
     return null;
   }
 
-  remove = (brick) => { 
-    // console.log(brick);
-    // for (let i = 1; i < this.bricks.length; i++) { 
-    //   if (this.bricks[i].id === brick.id) { 
-    //     console.log(`Found ${brick.id} at ${this.bricks[i].id}`);
-        
-    //   } 
-    // }
-    this.bricks = this.bricks.filter(b => b.id !== brick.id);
-  }
-
   play = () => { 
     this.clear(this.globals.bgColor);
     this.bricks.forEach(brick => { 
@@ -64,8 +54,9 @@ export default class Game {
     const brick = this.ballBrickCollide()
     if (brick) { 
       this.ball.collision(true);
-      this.remove(brick);
+      this.bricks = this.bricks.filter(b => b.id !== brick.id);
     }
+    this.brickCount = this.bricks.length;
     if (this.globals.gameState.menu || this.globals.gameState.paused) this.menu.show(this.ctx, this);
     window.requestAnimationFrame(this.play);
   }
