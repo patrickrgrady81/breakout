@@ -8,6 +8,7 @@ export default class Game {
     this.menu = menu;
     this.scoreboard = scoreboard;
     this.gameOver = gameOver;
+    this.levels = levels
     this.currentLevel = levels.currentLevel
     this.bricks = levels.level[this.currentLevel - 1].bricks;
     this.brickCount = this.bricks.length;
@@ -22,8 +23,8 @@ export default class Game {
 
   ballPaddleCollide = () => { 
     let collision = false;
-    if (this.ball.pos.x >= this.paddle.pos.x) { 
-      if (this.ball.pos.x >= this.paddle.pos.x && this.ball.pos.x + this.ball.size < this.paddle.pos.x + this.paddle.width) { 
+    if (this.ball.pos.x > this.paddle.pos.x) { 
+      if (this.ball.pos.x > this.paddle.pos.x && this.ball.pos.x + this.ball.size < this.paddle.pos.x + this.paddle.width) { 
         if (this.ball.pos.y + this.ball.size -4 >= this.paddle.pos.y && this.ball.pos.y < this.paddle.pos.y + this.paddle.height)
         collision = true;
       }
@@ -33,9 +34,9 @@ export default class Game {
 
   ballBrickCollide = () => { 
     for (let i = 0; i < this.bricks.length; i++){
-      if (this.ball.pos.x >= this.bricks[i].pos.x) { 
-        if (this.ball.pos.x >= this.bricks[i].pos.x && this.ball.pos.x + this.ball.size < this.bricks[i].pos.x + this.bricks[i].width) {
-          if (this.ball.pos.y + this.ball.size >= this.bricks[i].pos.y && this.ball.pos.y < this.bricks[i].pos.y + this.bricks[i].height){
+      if (this.ball.pos.x > this.bricks[i].pos.x) { 
+        if (this.ball.pos.x > this.bricks[i].pos.x && this.ball.pos.x + this.ball.size < this.bricks[i].pos.x + this.bricks[i].width) {
+          if (this.ball.pos.y + this.ball.size > this.bricks[i].pos.y && this.ball.pos.y < this.bricks[i].pos.y + this.bricks[i].height){
             return this.bricks[i];
           }
         }
@@ -46,6 +47,12 @@ export default class Game {
 
   nextLevel = () => { 
     this.currentLevel++;
+    console.log(this.currentLevel);
+    this.ball.reset();
+    this.paddle.reset();
+    this.globals.pause();
+    this.bricks = this.levels.level[this.currentLevel - 1].bricks;
+    
   }
 
   play = () => { 
@@ -55,19 +62,17 @@ export default class Game {
     });
     this.paddle.update();
     this.paddle.draw(this.ctx);
-    this.ball.update();
+    this.ball.update(this.paddle);
     this.ball.draw(this.ctx);
-    this.ball.collision(this.ballPaddleCollide());
+    if (this.ballPaddleCollide()) { 
+        this.ball.collision(this.paddle)
+    }
     const brick = this.ballBrickCollide()
     if (brick) { 
-      this.ball.collision(true);
+      this.ball.collision();
       this.bricks = this.bricks.filter(b => b.id !== brick.id);
       this.globals.score += this.currentLevel * 10;
-      if (this.bricks.length === 0) { 
-        console.log("Level Finished");
-        this.globals.pause();
-        this.nextLevel();
-      }
+      if (this.bricks.length === 0) this.nextLevel();
     }
     this.brickCount = this.bricks.length;
     this.scoreboard.show(this.currentLevel, this.bricks.length);

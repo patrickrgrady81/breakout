@@ -19,13 +19,14 @@ export default class Ball {
     this.xspeed *= Math.random() > 0.5 ? -1 : 1
   }
 
-  bound = () => { 
+  bound = (paddle) => { 
     if (this.pos.x < 0) this.xspeed = -this.xspeed;
     if (this.pos.y < 0) this.yspeed = -this.yspeed;
     if (this.pos.x + this.size > this.globals.width) this.xspeed = -this.xspeed;
     // if it hits here, lose a life
     if (this.pos.y + this.size > this.globals.height) { 
       this.reset();
+      paddle.reset();
       this.globals.lives -= 1;
       if (this.globals.lives > 0) {
         this.globals.gameState.running = false;
@@ -42,17 +43,16 @@ export default class Ball {
     ctx.fillRect(this.pos.x, this.pos.y, this.size, this.size);
   }
 
-  update = () => { 
+  update = (paddle) => { 
     if (this.globals.gameState.running) {
       this.pos.x += this.xspeed;
       this.pos.y += this.yspeed;
-      this.bound();
+      this.bound(paddle);
     }
   }
 
-  collision = (collision) => { 
-    if (!collision) return;
+  collision = (paddle) => { 
     this.yspeed = -this.yspeed;
-    this.update();
+    this.update(paddle);
   }
 }

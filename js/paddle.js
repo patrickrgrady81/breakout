@@ -4,7 +4,8 @@ export default class Paddle {
     this.width = 100;
     this.height = 12;
     this.speed = 0;
-    this.pos = { x: globals.width / 2 - this.width / 2 + 2, y: globals.height - 40 };
+    this.pos = {};
+    this.reset();
 
     this.keyDown = {
       left: false,
@@ -36,6 +37,10 @@ export default class Paddle {
         }
       }
     );
+  }
+
+  reset = () => { 
+    this.pos = { x: this.globals.width / 2 - this.width / 2 + 2, y: this.globals.height - 40 };
   }
 
   bound = () => { 
