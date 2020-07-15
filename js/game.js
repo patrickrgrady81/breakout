@@ -7,7 +7,6 @@ export default class Game {
     this.paddle = paddle;
     this.bricks = levels.level[levels.currentLevel-1].bricks;
     this.menu = menu;
-    this.prevTime = 0;
 
     window.requestAnimationFrame(this.play);
   }
@@ -18,18 +17,41 @@ export default class Game {
   }
 
   ballPaddleCollide = () => { 
+    let collision = false;
     if (this.ball.pos.x >= this.paddle.pos.x) { 
       if (this.ball.pos.x >= this.paddle.pos.x && this.ball.pos.x + this.ball.size < this.paddle.pos.x + this.paddle.width) { 
         if (this.ball.pos.y + this.ball.size -4 >= this.paddle.pos.y && this.ball.pos.y < this.paddle.pos.y + this.paddle.height)
-        return true;
+        collision = true;
       }
     }
-    return false;
+    return collision;
   }
 
+  ballBrickCollide = () => { 
+    for (let i = 0; i < this.bricks.length; i++){
+      if (this.ball.pos.x >= this.bricks[i].pos.x) { 
+        if (this.ball.pos.x >= this.bricks[i].pos.x && this.ball.pos.x + this.ball.size < this.bricks[i].pos.x + this.bricks[i].width) {
+          if (this.ball.pos.y + this.ball.size >= this.bricks[i].pos.y && this.ball.pos.y < this.bricks[i].pos.y + this.bricks[i].height){
+            return this.bricks[i];
+          }
+        }
+      }
+    };
+    return null;
+  }
 
-  play = (time) => { 
-    var currentProgress = time - this.prevTime;
+  remove = (brick) => { 
+    // console.log(brick);
+    // for (let i = 1; i < this.bricks.length; i++) { 
+    //   if (this.bricks[i].id === brick.id) { 
+    //     console.log(`Found ${brick.id} at ${this.bricks[i].id}`);
+        
+    //   } 
+    // }
+    this.bricks = this.bricks.filter(b => b.id !== brick.id);
+  }
+
+  play = () => { 
     this.clear(this.globals.bgColor);
     this.bricks.forEach(brick => { 
       brick.draw(this.ctx);
@@ -38,10 +60,13 @@ export default class Game {
     this.paddle.draw(this.ctx);
     this.ball.update();
     this.ball.draw(this.ctx);
-    this.ball.collideWithPaddle(this.ballPaddleCollide());
-
+    this.ball.collision(this.ballPaddleCollide());
+    const brick = this.ballBrickCollide()
+    if (brick) { 
+      this.ball.collision(true);
+      this.remove(brick);
+    }
     if (this.globals.gameState.menu || this.globals.gameState.paused) this.menu.show(this.ctx, this);
-    this.prevTime = time;
     window.requestAnimationFrame(this.play);
   }
 }
