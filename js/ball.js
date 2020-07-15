@@ -12,7 +12,7 @@ export default class Ball {
     const offset = 200;
     let rx = Math.floor(Math.random() * offset);
     rx *= Math.random() > 0.5 ? -1 : 1;
-    let ry = Math.floor(Math.random() * offset / 4);
+    let ry = Math.floor(Math.random() * (offset / 20));
     ry *= Math.random() > 0.5 ? -1 : 1;
     this.pos.x = this.globals.width / 2 + rx;
     this.pos.y = this.globals.height / 2 + ry;
@@ -23,7 +23,18 @@ export default class Ball {
     if (this.pos.x < 0) this.xspeed = -this.xspeed;
     if (this.pos.y < 0) this.yspeed = -this.yspeed;
     if (this.pos.x + this.size > this.globals.width) this.xspeed = -this.xspeed;
-    if (this.pos.y + this.size > this.globals.height) this.yspeed = -this.yspeed;
+    // if it hits here, lose a life
+    if (this.pos.y + this.size > this.globals.height) { 
+      this.reset();
+      this.globals.lives -= 1;
+      if (this.globals.lives > 0) {
+        this.globals.gameState.running = false;
+        this.globals.gameState.paused = true;
+      } else { 
+        this.globals.gameState.running = false;
+        this.globals.gameState.gameOver = true;
+      }
+    }
   }
 
   draw = (ctx) => { 

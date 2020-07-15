@@ -6,13 +6,11 @@ export default class Menu {
       if (e.keyCode === 32) { 
         if (this.globals.gameState.menu) {
           this.globals.gameState.menu = false;
-          this.globals.gameState.running = true;
+          this.globals.unpause();
         } else if (this.globals.gameState.running) {
-          this.globals.gameState.running = false;
-          this.globals.gameState.paused = true;
+          this.globals.pause();
         } else if (this.globals.gameState.paused) { 
-          this.globals.gameState.paused = false;
-          this.globals.gameState.running = true;
+          this.globals.unpause();
         }
       }
     });

@@ -5,6 +5,7 @@ export default class Globals {
     this.height = canvas.height;
     this.bgColor = "white";
     this.lives = 3;
+    this.score = 0;
 
     this.gameState = {
       menu: true,
@@ -17,5 +18,15 @@ export default class Globals {
 
     this.fontColor = "black";
     this.font = "30px Arial";
+  }
+
+  pause = () => {
+    this.gameState.running = false;
+    this.gameState.paused = true;
+  }
+
+  unpause = () => { 
+    this.gameState.running = true;
+    this.gameState.paused = false;    
   }
 }

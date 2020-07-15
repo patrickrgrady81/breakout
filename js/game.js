@@ -1,12 +1,13 @@
 export default class Game { 
 
-  constructor(globals, ball, paddle, menu, scoreboard, levels) { 
+  constructor(globals, ball, paddle, menu, scoreboard, gameOver, levels) { 
     this.globals = globals;
     this.ctx = globals.canvas.getContext("2d");
     this.ball = ball;
     this.paddle = paddle;
     this.menu = menu;
     this.scoreboard = scoreboard;
+    this.gameOver = gameOver;
     this.currentLevel = levels.currentLevel
     this.bricks = levels.level[this.currentLevel - 1].bricks;
     this.brickCount = this.bricks.length;
@@ -43,6 +44,10 @@ export default class Game {
     return null;
   }
 
+  nextLevel = () => { 
+    this.currentLevel++;
+  }
+
   play = () => { 
     this.clear(this.globals.bgColor);
     this.bricks.forEach(brick => { 
@@ -57,10 +62,17 @@ export default class Game {
     if (brick) { 
       this.ball.collision(true);
       this.bricks = this.bricks.filter(b => b.id !== brick.id);
+      this.globals.score += this.currentLevel * 10;
+      if (this.bricks.length === 0) { 
+        console.log("Level Finished");
+        this.globals.pause();
+        this.nextLevel();
+      }
     }
     this.brickCount = this.bricks.length;
     this.scoreboard.show(this.currentLevel, this.bricks.length);
     if (this.globals.gameState.menu || this.globals.gameState.paused) this.menu.show(this.ctx, this);
+    if (this.globals.gameState.gameOver) this.gameOver.show(this.ctx);
     window.requestAnimationFrame(this.play);
   }
 }
