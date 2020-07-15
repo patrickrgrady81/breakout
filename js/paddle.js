@@ -12,8 +12,6 @@ export default class Paddle {
     }
 
     window.addEventListener("keydown", e => {
-      if (e.keyCode === 65 || e.keyCode === 68) {
-        console.log(`${e.keyCode} keydown`);
         switch (e.keyCode) {
           case 65:
             this.keyDown.left = true;
@@ -24,11 +22,10 @@ export default class Paddle {
         }
       }
 
-    });
+    );
 
     window.addEventListener("keyup", e => { 
-      if (e.keyCode === 65 || e.keyCode === 68) {
-        console.log(`${e.keyCode} keyup`);
+
         switch (e.keyCode) {
           case 65:
             this.keyDown.left = false;
@@ -38,7 +35,12 @@ export default class Paddle {
             break;
         }
       }
-    });
+    );
+  }
+
+  bound = () => { 
+    if (this.pos.x < 0) this.pos.x = 0;
+    if (this.pos.x + this.width > this.globals.width) this.pos.x = this.globals.width - this.width;
   }
 
   draw = (ctx) => { 
@@ -56,5 +58,6 @@ export default class Paddle {
     }
 
     this.pos.x += this.speed;
+    this.bound();
   }
 }
