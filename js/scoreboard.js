@@ -15,6 +15,6 @@ export default class Scoreboard {
     this.ctx.font = this.globals.font;
     this.ctx.fillText(`Level: ${level}`, 20, this.height / 2 + 8);
     this.ctx.fillText(`Lives: ${this.globals.lives}`, this.width/2 - 64, this.height / 2 + 8);
-    this.ctx.fillText(`Bricks Left: ${left}`, this.width - 200, this.height / 2 + 8);
+    this.ctx.fillText(`Bricks: ${left}`, this.width - 150, this.height / 2 + 8);
   }
 }
