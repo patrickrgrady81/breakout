@@ -16,11 +16,11 @@ export default class Game {
 
   play = (time) => { 
     var currentProgress = time - this.prevTime;
-    // console.log(this.inputHandler);
     this.clear(this.globals.bgColor);
-    this.ball.draw(this.ctx);
     this.paddle.update();
     this.paddle.draw(this.ctx);
+    this.ball.update();
+    this.ball.draw(this.ctx);
     this.prevTime = time;
     window.requestAnimationFrame(this.play);
   }
