@@ -3,6 +3,10 @@ import Brick from "../brick.js"
 export default class L1 { 
   constructor() { 
     this.bricks = [];
+    this.create();
+  }
+
+  create = () => { 
     this.bricks.push(new Brick(60, 65));
     this.bricks.push(new Brick(160, 65));
     this.bricks.push(new Brick(260, 65));
