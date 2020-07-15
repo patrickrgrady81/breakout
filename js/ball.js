@@ -4,7 +4,19 @@ export default class Ball {
     this.size = 15;
     this.xspeed = 2;
     this.yspeed = 2;
-    this.pos = { x: globals.width / 2, y: globals.height / 2 };
+    this.pos = { x: 0, y: 0 };
+    this.reset();
+  }
+
+  reset = () => { 
+    const offset = 200;
+    let rx = Math.floor(Math.random() * offset);
+    rx *= Math.random() > 0.5 ? -1 : 1;
+    let ry = Math.floor(Math.random() * offset / 4);
+    ry *= Math.random() > 0.5 ? -1 : 1;
+    this.pos.x = this.globals.width / 2 + rx;
+    this.pos.y = this.globals.height / 2 + ry;
+    this.xspeed *= Math.random() > 0.5 ? -1 : 1
   }
 
   bound = () => { 
