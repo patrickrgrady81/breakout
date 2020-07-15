@@ -3,7 +3,6 @@ export default class Menu {
     this.globals = globals;
 
     window.addEventListener("keydown", e => { 
-      console.log(this.globals.gameState);
       if (e.keyCode === 32) { 
         if (this.globals.gameState.menu) {
           this.globals.gameState.menu = false;

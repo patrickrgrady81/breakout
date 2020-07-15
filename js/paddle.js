@@ -49,7 +49,6 @@ export default class Paddle {
   }
 
   update = () => { 
-    console.log(this.globals.gameState);
     if (this.globals.gameState.running) {
       if (this.keyDown.left) {
         this.speed = -5;

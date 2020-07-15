@@ -11,5 +11,7 @@ export default class Globals {
       paused: false,
       gameOver: false
     }
+
+    this.edit = false;
   }
 }

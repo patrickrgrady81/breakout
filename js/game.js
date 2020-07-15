@@ -1,10 +1,11 @@
 export default class Game { 
 
-  constructor(globals, ball, paddle, menu) { 
+  constructor(globals, ball, paddle, menu, levels) { 
     this.globals = globals;
     this.ctx = globals.canvas.getContext("2d");
     this.ball = ball;
     this.paddle = paddle;
+    this.bricks = levels.level[levels.currentLevel-1].bricks;
     this.menu = menu;
     this.prevTime = 0;
 
@@ -30,6 +31,9 @@ export default class Game {
   play = (time) => { 
     var currentProgress = time - this.prevTime;
     this.clear(this.globals.bgColor);
+    this.bricks.forEach(brick => { 
+      brick.draw(this.ctx);
+    });
     this.paddle.update();
     this.paddle.draw(this.ctx);
     this.ball.update();
