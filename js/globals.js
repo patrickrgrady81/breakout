@@ -4,6 +4,7 @@ export default class Globals {
     this.width = canvas.width;
     this.height = canvas.height;
     this.bgColor = "white";
+    this.lives = 3;
 
     this.gameState = {
       menu: true,
@@ -13,5 +14,8 @@ export default class Globals {
     }
 
     this.edit = false;
+
+    this.fontColor = "black";
+    this.font = "30px Arial";
   }
 }

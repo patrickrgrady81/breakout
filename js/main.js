@@ -5,6 +5,7 @@ import Paddle from "./paddle.js";
 import Menu from "./menu.js";
 import Edit from "./edit.js";
 import Levels from "./levels.js";
+import Scoreboard from "./scoreboard.js";
 
 
 const run = () => { 
@@ -17,9 +18,10 @@ const run = () => {
   const ball = new Ball(globals);
   const paddle = new Paddle(globals);
   const menu = new Menu(globals);
+  const scoreboard = new Scoreboard(globals);
   const levels = new Levels();
 
-  const game = new Game(globals, ball, paddle, menu, levels);
+  const game = new Game(globals, ball, paddle, menu, scoreboard, levels);
 
   game.play();
 }

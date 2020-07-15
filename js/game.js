@@ -1,12 +1,14 @@
 export default class Game { 
 
-  constructor(globals, ball, paddle, menu, levels) { 
+  constructor(globals, ball, paddle, menu, scoreboard, levels) { 
     this.globals = globals;
     this.ctx = globals.canvas.getContext("2d");
     this.ball = ball;
     this.paddle = paddle;
-    this.bricks = levels.level[levels.currentLevel-1].bricks;
     this.menu = menu;
+    this.scoreboard = scoreboard;
+    this.currentLevel = levels.currentLevel
+    this.bricks = levels.level[this.currentLevel - 1].bricks;
     this.brickCount = this.bricks.length;
 
     window.requestAnimationFrame(this.play);
@@ -57,6 +59,7 @@ export default class Game {
       this.bricks = this.bricks.filter(b => b.id !== brick.id);
     }
     this.brickCount = this.bricks.length;
+    this.scoreboard.show(this.currentLevel, this.bricks.length);
     if (this.globals.gameState.menu || this.globals.gameState.paused) this.menu.show(this.ctx, this);
     window.requestAnimationFrame(this.play);
   }
