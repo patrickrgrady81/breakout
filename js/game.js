@@ -1,11 +1,13 @@
 export default class Game { 
 
-  constructor(globals, ball, paddle) { 
+  constructor(globals, ball, paddle, menu) { 
     this.globals = globals;
     this.ctx = globals.canvas.getContext("2d");
     this.ball = ball;
     this.paddle = paddle;
+    this.menu = menu;
     this.prevTime = 0;
+
     window.requestAnimationFrame(this.play);
   }
  
@@ -33,6 +35,8 @@ export default class Game {
     this.ball.update();
     this.ball.draw(this.ctx);
     this.ball.collideWithPaddle(this.ballPaddleCollide());
+
+    if (this.globals.gameState.menu || this.globals.gameState.paused) this.menu.show(this.ctx, this);
     this.prevTime = time;
     window.requestAnimationFrame(this.play);
   }

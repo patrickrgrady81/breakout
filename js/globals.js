@@ -4,5 +4,12 @@ export default class Globals {
     this.width = canvas.width;
     this.height = canvas.height;
     this.bgColor = "white";
+
+    this.gameState = {
+      menu: true,
+      running: false,
+      paused: false,
+      gameOver: false
+    }
   }
 }

@@ -49,15 +49,18 @@ export default class Paddle {
   }
 
   update = () => { 
-    if (this.keyDown.left === true) {
-      this.speed = -5;
-    } else if (this.keyDown.right === true) {
-      this.speed = 5;
-    } else { 
-      this.speed = 0;
-    }
+    console.log(this.globals.gameState);
+    if (this.globals.gameState.running) {
+      if (this.keyDown.left) {
+        this.speed = -5;
+      } else if (this.keyDown.right) {
+        this.speed = 5;
+      } else {
+        this.speed = 0;
+      }
 
-    this.pos.x += this.speed;
-    this.bound();
+      this.pos.x += this.speed;
+      this.bound();
+    }
   }
 }

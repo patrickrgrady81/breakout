@@ -20,9 +20,11 @@ export default class Ball {
   }
 
   update = () => { 
-    this.pos.x += this.xspeed;
-    this.pos.y += this.yspeed;
-    this.bound();
+    if (this.globals.gameState.running) {
+      this.pos.x += this.xspeed;
+      this.pos.y += this.yspeed;
+      this.bound();
+    }
   }
 
   collideWithPaddle = (collision) => { 
