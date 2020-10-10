@@ -2,8 +2,8 @@ export default class Ball {
   constructor(globals) { 
     this.globals = globals;
     this.size = 15;
-    this.xspeed = 2;
-    this.yspeed = 2;
+    this.xspeed = 2.5;
+    this.yspeed = 1.5;
     this.pos = { x: 0, y: 0 };
     this.reset();
   }

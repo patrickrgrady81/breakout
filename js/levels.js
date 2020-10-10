@@ -6,11 +6,11 @@ import L3 from "./levels/L3.js";
 export default class Levels { 
   constructor() { 
     this.currentLevel = 1;
-    this.totalLevels = 3;
     this.level = [];
-    this.level.push(new L0());
+    // this.level.push(new L0());
     this.level.push(new L1());
     this.level.push(new L2());
     this.level.push(new L3());
+    this.totalLevels = this.level.length;
   }
 }

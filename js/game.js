@@ -52,8 +52,9 @@ export default class Game {
     this.paddle.reset();
     this.globals.pause();
     this.bricks = this.levels.level[this.currentLevel - 1].bricks;
-    
   }
+
+  special = () => { }
 
   play = () => { 
     this.clear(this.globals.bgColor);
@@ -71,6 +72,7 @@ export default class Game {
     if (brick) { 
       this.ball.collision();
       this.bricks = this.bricks.filter(b => b.id !== brick.id);
+      this.special();
       this.globals.score += this.currentLevel * 10;
       if (this.bricks.length === 0) this.nextLevel();
     }
