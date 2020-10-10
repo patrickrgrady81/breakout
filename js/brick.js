@@ -1,8 +1,8 @@
 export default class Brick { 
-  constructor(id, x, y) { 
+  constructor(id, x, y, width = 80) { 
     this.id = id;
     this.pos = { x, y }
-    this.width = 80;
+    this.width = width;
     this.height = 20;
   }
 
