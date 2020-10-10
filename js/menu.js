@@ -20,6 +20,6 @@ export default class Menu {
     ctx.fillStyle = this.globals.fontColor;
     ctx.font = this.globals.font;
     ctx.fillText("Press Space To Continue", this.globals.width / 2 - 150, this.globals.height / 2 - 30);
-    ctx.fillText("A = Move Left, D = Move Right", this.globals.width / 2 - 150, this.globals.height / 2 + 30);
+    ctx.fillText("A = Move Left, D = Move Right", this.globals.width / 2 - 180, this.globals.height / 2 + 30);
   }
 }
